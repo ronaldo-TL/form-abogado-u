@@ -46,18 +46,23 @@ module.exports = configure(function (/* ctx */) {
     },
 
     framework: {
+      lang: 'es',
       config: { 
         notify: {
           badgeColor: 'primary',
           group: false
         },
       },
-
-      components: ['QInput'],
-      directive: ['CloseOverlay'],
+      
+      components: [
+        'QInput',
+        'QDialog'
+      ],
+      // directives: ['CloseOvserlay'],
       plugins: ['Notify']
     },
     animations: [],
+
 
     ssr: {
       pwa: false,

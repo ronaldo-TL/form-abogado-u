@@ -1,49 +1,66 @@
 <template>
-  <div class="q-pa-md" style="max-width: 600px; margin-left: 20px">
-    <q-dialog v-model="loading" persistent>
-      <q-spinner-dots size="40px" color="secondary" />
-    </q-dialog>
+  <div class="q-pa-md" style="max-width: 500px; margin-left: 10px">
+    <q-btn label="INGRESAR" color="primary" @click="fixed = true" />
     
-    <q-form 
-        @submit.prevent="handleSubmit"
-        class="q-gutter-md">
-        <h2 class="text-h5 font-poppins">Actualizar matrícula</h2>
-        <q-input 
-            filled 
-            v-model="matricula" 
-            label="Matrícula" 
-            hint="Campo obligatorio"
-            color="secondary"
-            :rules="[ val => val && val.length > 0 || 'El campo es requerido']" />
-        <q-select 
-            filled 
-            v-model="estadoRegistro" 
-            :options="estadoRegistroOptions" 
-            label="Estado de Registro"
-            color="secondary"
-            :rules="[ val => val && val.length > 0 || 'El campo es requerido']" />
-        
-        <q-select  
-          filled  
-          v-model="estadoAbogado" 
-          :options="estadoAbogadoOptions" 
-          label="Estado de Abogado"
-          color="secondary"
-          :rules="[ val => val && val.length > 0 || 'El campo es requerido']"  />
+    <q-dialog v-model="fixed">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Actualizar matricula</div>
+        </q-card-section>
 
-        <q-input  
-          filled v-model="fechaCredencialVencimiento" 
-          type="date" 
-          label="Fecha de Vencimiento"
-          color="secondary"
-          :rules="[ val => val && val.length > 0 || 'El campo es requerido']"/>
+        <q-separator />
 
-        <q-btn 
-          type="submit" 
-          label="Actualizar" 
-          color="secondary"
-          />
-    </q-form>
+        <q-card-section style="max-width: 70vh; width: 800px" class="scroll">
+          <q-dialog v-model="loading" persistent>
+            <q-spinner-dots size="40px" color="secondary" />
+          </q-dialog>
+          <q-form 
+              @submit.prevent="handleSubmit"
+              class="q-gutter-md">
+              <q-input 
+                  filled 
+                  v-model="matricula" 
+                  label="Matrícula" 
+                  hint="Campo obligatorio"
+                  color="secondary"
+                  :rules="[ val => val && val.length > 0 || 'El campo es requerido']" />
+              <q-select 
+                  filled 
+                  v-model="estadoRegistro" 
+                  :options="estadoRegistroOptions" 
+                  label="Estado de Registro"
+                  color="secondary"
+                  :rules="[ val => val && val.length > 0 || 'El campo es requerido']" />
+              
+              <q-select  
+                filled  
+                v-model="estadoAbogado" 
+                :options="estadoAbogadoOptions" 
+                label="Estado de Abogado"
+                color="secondary"
+                :rules="[ val => val && val.length > 0 || 'El campo es requerido']"  />
+
+              <q-input  
+                filled v-model="fechaCredencialVencimiento" 
+                type="date" 
+                label="Fecha de Vencimiento"
+                color="secondary"
+                :rules="[ val => val && val.length > 0 || 'El campo es requerido']"/>
+
+              <q-btn 
+                type="submit" 
+                label="Actualizar" 
+                color="secondary"
+                />
+              <q-btn 
+                label="CANCELAR" 
+                color="primary" 
+                v-close-popup />
+          </q-form>
+        </q-card-section>
+
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
@@ -56,6 +73,7 @@ export default {
   name: 'FormReset',
   setup() {
     const $q = useQuasar();
+
 
     
     const matricula = ref('');
@@ -114,9 +132,10 @@ export default {
       estadoAbogadoOptions,
       handleSubmit,
 
-
+      fixed: ref(false)
     };
-  }
+  },
+  
 };
 </script>
 
