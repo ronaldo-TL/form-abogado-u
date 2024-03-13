@@ -10,7 +10,7 @@
 
         <q-separator />
 
-        <q-card-section style="max-width: 70vh; width: 800px" class="scroll">
+        <q-card-section style="max-width: 70vh; width: 450px" class="scroll">
           <q-dialog v-model="loading" persistent>
             <q-spinner-dots size="40px" color="secondary" />
           </q-dialog>
@@ -19,18 +19,20 @@
               class="q-gutter-md">
               <q-input 
                   filled 
+                  
                   v-model="matricula" 
                   label="Matrícula" 
                   hint="Campo obligatorio"
                   color="secondary"
-                  :rules="[ val => val && val.length > 0 || 'El campo es requerido']" />
+                  class="uppercase"
+                  :rules="valoresRules.matricula"/>
               <q-select 
                   filled 
                   v-model="estadoRegistro" 
                   :options="estadoRegistroOptions" 
                   label="Estado de Registro"
                   color="secondary"
-                  :rules="[ val => val && val.length > 0 || 'El campo es requerido']" />
+                  :rules="valoresRules.estadoRegistro" />
               
               <q-select  
                 filled  
@@ -38,14 +40,14 @@
                 :options="estadoAbogadoOptions" 
                 label="Estado de Abogado"
                 color="secondary"
-                :rules="[ val => val && val.length > 0 || 'El campo es requerido']"  />
+                :rules="valoresRules.estadoAbogado"  />
 
               <q-input  
                 filled v-model="fechaCredencialVencimiento" 
                 type="date" 
                 label="Fecha de Vencimiento"
                 color="secondary"
-                :rules="[ val => val && val.length > 0 || 'El campo es requerido']"/>
+                :rules="valoresRules.fechaCredencialVencimiento"/>
 
               <q-btn 
                 type="submit" 
@@ -54,8 +56,11 @@
                 />
               <q-btn 
                 label="CANCELAR" 
-                color="primary" 
-                v-close-popup />
+                color="primary"
+                v-close-popup
+                @click="cancelar"
+                />
+                
           </q-form>
         </q-card-section>
 
@@ -64,18 +69,27 @@
   </div>
 </template>
 <script>
+// import ''
 import { ref } from 'vue'; 
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { useQuasar } from 'quasar';
+import validaciones from '../common/validations'
+import { message } from '../boot/message'
+
+
+const valoresRules = {
+  matricula: [validaciones.requerido, validaciones.alfanumerico, validaciones.minimoSeis],
+  estadoRegistro: [validaciones.requerido],
+  estadoAbogado: [validaciones.requerido],
+  fechaCredencialVencimiento: [validaciones.requerido],
+}
+
+
 
 export default {
-  name: 'FormReset',
   setup() {
     const $q = useQuasar();
-
-
-    
     const matricula = ref('');
     const estadoRegistro = ref('');
     const estadoAbogado = ref('');
@@ -90,11 +104,11 @@ export default {
       'global/getEstadoAbogado',
       'global/getFechaCredencialVencimiento'
     ]);
-
+    
     const handleSubmit = async () => {
       try {
         loading.value = true;
-        const apiUrl = 'http://192.168.3.243/apirpaoficial/web/publico/abogado';
+        const apiUrl = 'http://192.168.3.243/apirpaoficial/web/publico/abogado'; //llevar a otro lugar
         const response = await axios.get(`${apiUrl}/${matricula.value  || matriculaGlobal.value }/actualizar-campo`, {
           params: {
             estadoRegistro: estadoRegistro.value || estadoRegistroG.value,
@@ -103,24 +117,26 @@ export default {
           }
         });
         console.log(response.data);
-        $q.notify({
-          type: 'secondary',
-          color: 'teal',
-          position: 'top-right',
-          message: 'Se actualizo correctamente'
-        });
+        // $q.notify({
+        //   // type: 'secondary',
+        //   color: 'secondary',
+        //   position: 'top-right',
+        //   message: 'Se actualizo correctamente'
+        // });
+        message.success('Se actualizó correctamente');
       } catch (error) {
         loading.value = false;
-        console.error('Error en el servidor:' );
-   
-        $q.notify({
-          type: 'negative',
-          classes: 'text-white bg-red',
-          position: 'top-right',
-          message: 'Error en el servidor'
-        });
+        // console.error('Error en el servidor:' );
+        message.error('Error en el servidor');
       }
     };
+
+    const cancelar = () => {
+      matricula.value = ''
+      estadoAbogado.value = ''
+      estadoRegistro.value = ''
+      fechaCredencialVencimiento.value = ''
+    }
 
     return {
       matricula,
@@ -131,7 +147,11 @@ export default {
       estadoRegistroOptions,
       estadoAbogadoOptions,
       handleSubmit,
+      
+      
+      valoresRules,
 
+      cancelar,
       fixed: ref(false)
     };
   },
@@ -140,5 +160,7 @@ export default {
 </script>
 
 <style>
-
+    .uppercase input {
+        text-transform: uppercase;
+    }
 </style>
