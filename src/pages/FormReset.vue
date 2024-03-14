@@ -89,7 +89,7 @@ const valoresRules = {
 
 export default {
   setup() {
-    const $q = useQuasar();
+    // const $q = useQuasar();
     const matricula = ref('');
     const estadoRegistro = ref('');
     const estadoAbogado = ref('');
@@ -102,13 +102,20 @@ export default {
       'global/getMatricula',
       'global/getEstadoRegistro',
       'global/getEstadoAbogado',
-      'global/getFechaCredencialVencimiento'
+      'global/getFechaCredencialVencimiento',
     ]);
     
     const handleSubmit = async () => {
       try {
         loading.value = true;
         const apiUrl = 'http://192.168.3.243/apirpaoficial/web/publico/abogado'; //llevar a otro lugar
+
+          if (!matricula.value && !matriculaGlobal.value) {
+            message.error('La matrícula no existe');
+            return;
+          }
+
+
         const response = await axios.get(`${apiUrl}/${matricula.value  || matriculaGlobal.value }/actualizar-campo`, {
           params: {
             estadoRegistro: estadoRegistro.value || estadoRegistroG.value,
@@ -126,9 +133,10 @@ export default {
         message.success('Se actualizó correctamente');
       } catch (error) {
         loading.value = false;
-        // console.error('Error en el servidor:' );
-        message.error('Error en el servidor');
+        // console.error('Error en el servidor:'  );
+        message.error('Error de conexion');
       }
+      
     };
 
     const cancelar = () => {

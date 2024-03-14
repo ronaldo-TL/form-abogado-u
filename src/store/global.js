@@ -27,7 +27,7 @@ const state = {
   }
   
   export default {
-    namespaced: true, // Esto es importante en Quasar
+    namespaced: true, 
     state,
     mutations,
     actions,

@@ -1,12 +1,12 @@
 {
-    "me": [
+    "abogado": [
       {
         "data": {
             "message": "Se actualizó correctamente",
             "matricula": "123ABC",
             "estadoRegistro": "CON JURAMENTO",
             "estadoAbogado": "CONCLUIDO",
-            "fechaCredencialVencimiento": "http://placehold.it/32x32"
+            "fechaCredencialVencimiento": "2021-12-12"
 
         },
         "error": true,
