@@ -15,7 +15,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+ 
       </q-toolbar>
     </q-header>
 
@@ -50,6 +50,13 @@ import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
+  {
+    title: 'Matricula',
+    caption: 'Actualizar matricula de abogados',
+    icon: 'symbols-outlined',
+    link: '/#/matricula'
+
+  },
   {
     title: 'Docs',
     caption: 'quasar.dev',
@@ -91,7 +98,8 @@ const linksList = [
     caption: 'Community Quasar projects',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
-  }
+  },
+
 ]
 
 export default defineComponent({

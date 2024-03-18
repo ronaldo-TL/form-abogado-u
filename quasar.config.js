@@ -3,7 +3,7 @@ module.exports = configure(function (/* ctx */) {
   return {
 
     boot: [
-      
+      'message',
       'axios',
     ],
 

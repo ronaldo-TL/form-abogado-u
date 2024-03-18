@@ -5,6 +5,8 @@ import quasarUserOptions from './quasar-user-options'
 import { store } from './store/index' 
 
 
+
+
 createApp(App)
   .use(Quasar, quasarUserOptions)
   .use(store) 
