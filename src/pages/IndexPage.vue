@@ -1,15 +1,13 @@
 <template>
-    <FormReset />
+    <h3>Bienvenido !!</h3>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import FormReset from './FormReset.vue'
+
 
 export default defineComponent({
   name: 'IndexPage',
-  components: {
-    FormReset,
-  }
+
 })
 </script>

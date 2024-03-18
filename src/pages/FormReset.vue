@@ -1,8 +1,8 @@
 <template>
-  <div class="q-pa-md" style="max-width: 500px; margin-left: 10px">
-    <q-btn label="INGRESAR" color="primary" @click="fixed = true" />
+  <div class="q-pa-md" style="max-width: 480px; margin-left: 10px">
+    <!-- <q-btn label="INGRESAR" color="primary" @click="fixed = true" /> -->
     
-    <q-dialog v-model="fixed">
+
       <q-card>
         <q-card-section>
           <div class="text-h6">Actualizar matricula</div>
@@ -10,7 +10,7 @@
 
         <q-separator />
 
-        <q-card-section style="max-width: 70vh; width: 450px" class="scroll">
+        <q-card-section style="max-width: 70vh; width: 480px" class="scroll">
           <q-dialog v-model="loading" persistent>
             <q-spinner-dots size="40px" color="secondary" />
           </q-dialog>
@@ -52,11 +52,15 @@
               <q-btn 
                 type="submit" 
                 label="Actualizar" 
+                class="glossy"
                 color="secondary"
+                icon-right="send"
                 />
               <q-btn 
-                label="CANCELAR" 
+                label="Cancelar" 
                 color="primary"
+                icon-right="layers_clear"
+                class="glossy"
                 v-close-popup
                 @click="cancelar"
                 />
@@ -65,7 +69,7 @@
         </q-card-section>
 
       </q-card>
-    </q-dialog>
+  
   </div>
 </template>
 <script>
@@ -102,13 +106,14 @@ export default {
       'global/getMatricula',
       'global/getEstadoRegistro',
       'global/getEstadoAbogado',
-      'global/getFechaCredencialVencimiento',
+      'global/getFechaCredencialVencimiento'
     ]);
     
     const handleSubmit = async () => {
+      
       try {
-        loading.value = true;
-        const apiUrl = 'http://192.168.3.243/apirpaoficial/web/publico/abogado'; //llevar a otro lugar
+        loading.value = false;
+        const apiUrl = 'https://testrpa2.justicia.gob.bo/apiRpa/web/publico/abogado'; //llevar a otro lugar
 
           if (!matricula.value && !matriculaGlobal.value) {
             message.error('La matrícula no existe');
@@ -123,18 +128,14 @@ export default {
             fechaCredencialVencimiento: fechaCredencialVencimiento.value || fechaCredencialVencimientoG.value
           }
         });
-        console.log(response.data);
-        // $q.notify({
-        //   // type: 'secondary',
-        //   color: 'secondary',
-        //   position: 'top-right',
-        //   message: 'Se actualizo correctamente'
-        // });
-        message.success('Se actualizó correctamente');
+        
+        const { mensaje } = response.data
+
+        message.success(mensaje);
       } catch (error) {
         loading.value = false;
-        // console.error('Error en el servidor:'  );
-        message.error('Error de conexion');
+         
+        message.error('error de conexion');
       }
       
     };

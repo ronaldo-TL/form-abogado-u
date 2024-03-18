@@ -1,8 +1,9 @@
 <template>
+      <!-- target="_blank" -->
   <q-item
     clickable
     tag="a"
-    target="_blank"
+
     :href="link"
   >
     <q-item-section
@@ -14,7 +15,7 @@
 
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label caption class="label-caption">{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
@@ -47,3 +48,10 @@ export default defineComponent({
   }
 })
 </script>
+
+
+<style scoped>
+  .label-caption{
+    color: rgb(119, 119, 119);
+  }
+</style>

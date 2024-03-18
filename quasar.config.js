@@ -1,8 +1,11 @@
 const { configure } = require('quasar/wrappers');
+const path = require('path')
+
 module.exports = configure(function (/* ctx */) {
   return {
 
     boot: [
+      'i18n',
       'message',
       'axios',
     ],
@@ -14,7 +17,7 @@ module.exports = configure(function (/* ctx */) {
     extras: [
       // 'ionicons-v4',
       // 'mdi-v7',
-      // 'fontawesome-v6',
+      'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -30,14 +33,21 @@ module.exports = configure(function (/* ctx */) {
         node: 'node20'
       },
 
-      vueRouterMode: 'hash',
+      vueRouterMode: 'history',
+
+      // extendViteConf(viteConf,{isClient,isServer}){
+      //   viteConf.base='/herramientas'
+      // },
+
 
       vitePlugins: [
-        ['vite-plugin-checker', {
-          eslint: {
-            lintCommand: 'eslint "./**/*.{js,mjs,cjs,vue}"'
-          }
-        }, { server: false }]
+        ['@intlify/vite-plugin-vue-i18n', {
+          // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
+          // compositionOnly: false,
+
+          // you need to set i18n resource including paths !
+          include: path.resolve(__dirname, './src/i18n/**')
+        }]
       ]
     },
     devServer: {
@@ -61,6 +71,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: ['CloseOvserlay'],
       plugins: [
         'Notify',
+        'AppFullscreen'
       ]
 
     },

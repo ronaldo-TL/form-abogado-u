@@ -1,15 +1,11 @@
 import { store } from 'quasar/wrappers'
-import { createStore } from 'vuex'
-import globalModule from './global'
+import { createPinia } from 'pinia'
 
-export default store(function () {
-  const Store = createStore({
-    modules: {
-      global: globalModule // Agrega tu módulo global aquí
-    },
+export default store((/* { ssrContext } */) => {
+  const pinia = createPinia()
 
-    strict: process.env.DEBUGGING
-  })
+  // You can add Pinia plugins here
+  // pinia.use(SomePiniaPlugin)
 
-  return Store
+  return pinia
 })
