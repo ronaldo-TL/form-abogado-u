@@ -59,7 +59,10 @@ module.exports = configure(function (/* ctx */) {
         'QDialog'
       ],
       // directives: ['CloseOvserlay'],
-      plugins: ['Notify']
+      plugins: [
+        'Notify',
+      ]
+
     },
     animations: [],
 

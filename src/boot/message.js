@@ -40,5 +40,11 @@ const message = {
     app.config.globalProperties.$message = message
     app.provide('message', message)
   })
+<<<<<<< HEAD
 
   export { message }
+=======
+  
+  export { message }
+  
+>>>>>>> 05c7101714f7b8170b91ad7d199fc7f1c24efa72
